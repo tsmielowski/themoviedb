@@ -2,6 +2,7 @@ import React from "react";
 import HeaderComponent from "./HeaderComponent";
 import SearchComponent from "./SearchComponent";
 import TheMovieDB from "./TheMovieDBComponents";
+import "./css/RootComponent.css";
 
 class RootComponent extends React.Component {
     constructor( props ) {
@@ -26,7 +27,7 @@ class RootComponent extends React.Component {
         const item = this.props.items.find( item => item.id === this.state.id );
 
         return (
-            <div>
+            <div className="the-movie-db">
                 <HeaderComponent
                     header="The Movie DB"
                 />

@@ -1,4 +1,5 @@
 import React from "react";
+import "./css/TheMovieDBComponents.css";
 
 const TheMovieDB = {
     DetailComponent: props => {
@@ -13,7 +14,7 @@ const TheMovieDB = {
         );
     },
     ListComponent: props => (
-        <ul>
+        <ul className="list">
             { props.items
                 .map( item => <TheMovieDB.ItemComponent
                     item={ item }

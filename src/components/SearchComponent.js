@@ -1,4 +1,5 @@
 import React from "react";
+import "./css/SearchComponent.css";
 
 class SearchComponent extends React.Component {
     constructor( props ) {
@@ -12,7 +13,7 @@ class SearchComponent extends React.Component {
 
     render() {
         return (
-            <form>
+            <form className="search">
                 <input
                     onChange={ this.handleSearchTextChange }
                     placeholder="Type to search TheMovieDB"
