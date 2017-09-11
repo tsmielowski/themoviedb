@@ -1,8 +1,7 @@
 import React from "react";
 import HeaderComponent from "./HeaderComponent";
 import SearchComponent from "./SearchComponent";
-import TheMovieDBDetailComponent from "./TheMovieDBDetailComponent";
-import TheMovieDBListComponent from "./TheMovieDBListComponent";
+import TheMovieDB from "./TheMovieDBComponents";
 
 class RootComponent extends React.Component {
     constructor( props ) {
@@ -31,14 +30,14 @@ class RootComponent extends React.Component {
                 <HeaderComponent
                     header="The Movie DB"
                 />
-                <TheMovieDBDetailComponent
+                <TheMovieDB.DetailComponent
                     item={ item }
                 />
                 <SearchComponent
                     onSearchTextChange={ this.handleSearchTextChange }
                     searchText={ this.state.searchText }
                 />
-                <TheMovieDBListComponent
+                <TheMovieDB.ListComponent
                     items={ this.props.items.filter( item => item.name.indexOf( this.state.searchText ) > -1 ) }
                     onItemSelect={ this.handleItemSelect }
                 />
