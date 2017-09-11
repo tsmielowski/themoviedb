@@ -2,7 +2,7 @@
 
 For preparing a development environment tool create-react-app was used.
 Npm package themoviedb-javascript-library is used to integrate with TheMovieDB API.
-React library was used to prepare view layer.
+React library is used to prepare view layer.
 
 ## Instalation
 
