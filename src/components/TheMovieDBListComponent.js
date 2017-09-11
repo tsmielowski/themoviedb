@@ -7,6 +7,7 @@ const TheMovieDBListComponent = props => (
             .map( item => <TheMovieDBItemComponent
                 item={ item }
                 key={ item.id.toString() }
+                onItemSelect={ props.onItemSelect }
             /> ) }
     </ul>
 );
