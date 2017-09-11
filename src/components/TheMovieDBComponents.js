@@ -1,13 +1,20 @@
 import React from "react";
+import PersonVO from "./../proxy/vo/PersonVO";
 import "./css/TheMovieDBComponents.css";
 
 const TheMovieDB = {
     DetailComponent: props => {
         const item = props.item;
+        const image = item && item.image;
+        const name = item && item.name;
+        const overview = ( item && item.overview ) || null;
+        const type = item instanceof PersonVO ? "person" : "movie/tv";
 
         return item ? (
-            <div>
-                { item.name }
+            <div className="detail">
+                { image !== null && <img alt={ name } src={ image } /> }
+                <h4>{ name } ({ type })</h4>
+                { overview !== null && <div>{ overview }</div> }
             </div>
         ) : (
             <div></div>
@@ -37,11 +44,12 @@ class ItemComponent extends React.Component {
     }
 
     render() {
-        const name = this.props.item.name;
+        const item = this.props.item;
+        const type = item instanceof PersonVO ? "person" : "movie/tv";
 
         return (
             <li>
-                { name } <a alt={ name } href="#" onClick={ this.handleItemSelect }>more &raquo;</a>
+                { item.name } ({ type }) <a href="#" onClick={ this.handleMovieItemSelect }>more &raquo;</a>
             </li>
         );
     }

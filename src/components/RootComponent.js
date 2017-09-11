@@ -3,12 +3,14 @@ import HeaderComponent from "./HeaderComponent";
 import SearchComponent from "./SearchComponent";
 import TheMovieDB from "./TheMovieDBComponents";
 import "./css/RootComponent.css";
+import search from "./../proxy/TheMovieDBAPIProxy";
 
 class RootComponent extends React.Component {
     constructor( props ) {
         super( props );
         this.state = {
             id: null,
+            items: [],
             searchText: ""
         };
         this.handleItemSelect = this.handleItemSelect.bind( this );
@@ -20,11 +22,23 @@ class RootComponent extends React.Component {
     }
 
     handleSearchTextChange( searchText ) {
+        search( searchText )
+            .then( items => {
+                this.setState( { items } );
+            } )
+            .catch( data => {
+                /**
+                 * TODO: handle error in a "smart" way
+                 */
+                console.warn( "Error: %o", data );
+                this.setState( { items: [] } );
+            } );
         this.setState( { searchText } );
     }
 
     render() {
-        const item = this.props.items.find( item => item.id === this.state.id );
+        const item = this.state.items
+                  .find( item => item.id === this.state.id );
 
         return (
             <div className="the-movie-db">
@@ -39,7 +53,7 @@ class RootComponent extends React.Component {
                     searchText={ this.state.searchText }
                 />
                 <TheMovieDB.ListComponent
-                    items={ this.props.items.filter( item => item.name.indexOf( this.state.searchText ) > -1 ) }
+                    items={ this.state.items }
                     onItemSelect={ this.handleItemSelect }
                 />
             </div>
