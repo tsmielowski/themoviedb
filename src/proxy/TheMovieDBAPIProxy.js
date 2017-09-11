@@ -17,7 +17,12 @@ theMovieDb.search.getMulti = ( options, success, error ) => {
         url: "search/multi" + theMovieDb.common.generateQuery( options )
     }, success, error );
 };
-
+/**
+ * Method searches for movies/tvs/persons in theMovieDB by string query
+ * @param {string} query String to searcg for
+ * @public
+ * @returns {Object} Promise object
+ */
 const search = query => new Promise( ( resolve, reject ) => {
     /**
      * TODO: add support for pagination

@@ -4,8 +4,16 @@ import SearchComponent from "./SearchComponent";
 import TheMovieDB from "./TheMovieDBComponents";
 import "./css/RootComponent.css";
 import search from "./../proxy/TheMovieDBAPIProxy";
-
+/**
+ * @public
+ */
 class RootComponent extends React.Component {
+    /**
+     * Constructor
+     * @constructs RootComponent
+     * @extends React.Component
+     * @param {Object} props An empty object
+     */
     constructor( props ) {
         super( props );
         this.state = {
@@ -16,11 +24,21 @@ class RootComponent extends React.Component {
         this.handleItemSelect = this.handleItemSelect.bind( this );
         this.handleSearchTextChange = this.handleSearchTextChange.bind( this );
     }
-
+    /**
+     * Method handles change of "id" property in state object after selecting by
+     * user item in list of search result
+     * @param {number} id Id
+     * @public
+     */
     handleItemSelect( id ) {
         this.setState( { id } );
     }
-
+    /**
+     * Method handles change of "items" property and "searchText" property in
+     * state object after providing by user query string
+     * @param {string} searchText Search text
+     * @public
+     */
     handleSearchTextChange( searchText ) {
         search( searchText )
             .then( items => {
@@ -35,7 +53,11 @@ class RootComponent extends React.Component {
             } );
         this.setState( { searchText } );
     }
-
+    /**
+     * Method renders root component
+     * @public
+     * @returns {Object} React element
+     */
     render() {
         const item = this.state.items
                   .find( item => item.id === this.state.id );
