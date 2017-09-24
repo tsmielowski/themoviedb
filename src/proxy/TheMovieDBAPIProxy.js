@@ -18,48 +18,63 @@ theMovieDb.search.getMulti = ( options, success, error ) => {
     }, success, error );
 };
 /**
+ * Method adds objects to collection
+ * @param {Array.<Object>} collection Array of objects of one of the type MovieVO/PersonVO
+ * @param {Object} item Object which contains data for detail of movie/tv/person
+ * @private
+ */
+export const addToCollection = ( collection, item ) => {
+    if ( item.id && ( item.name || item.title ).trim() ) {
+        switch ( item.media_type ) {
+            case MediaTypes.MOVIE:
+            case MediaTypes.TV:
+                collection.push( new MovieVO( item ) );
+                break;
+            case MediaTypes.PERSON:
+                collection.push( new PersonVO( item ) );
+                break;
+            default:
+                break;
+        }
+    }
+
+    return collection;
+};
+/**
+ * Error callback for search method
+ * @param {Function} reject Reject function from Promise
+ * @param {Obejct} data Object with error informations
+ * @private
+ */
+export const onError = ( reject, data ) => {
+    reject( data );
+};
+/**
+ * Success callback for search method
+ * @param {Function} resolve Resolve function from Promise
+ * @param {string} data Object with response
+ * @private
+ */
+export const onSuccess = ( resolve, data ) => {
+    data = JSON.parse( data );
+    resolve( ( data.results || [] ).reduce( addToCollection, [] ) );
+};
+/**
  * Method searches for movies/tvs/persons in theMovieDB by string query
  * @param {string} query String to searcg for
  * @public
  * @returns {Object} Promise object
  */
-const search = query => new Promise( ( resolve, reject ) => {
+export const search = query => new Promise( ( resolve, reject ) => {
     /**
      * TODO: add support for pagination
      */
     query = query.trim();
 
-    const onError = data => {
-        reject( data );
-    };
-    const onSuccess = data => {
-        data = JSON.parse( data );
-
-        const items = [];
-
-        ( data.results || [] ).forEach( item => {
-            if ( item.id && ( item.name || item.title ).trim() ) {
-                switch ( item.media_type ) {
-                    case MediaTypes.MOVIE:
-                    case MediaTypes.TV:
-                        items.push( new MovieVO( item ) );
-                        break;
-                    case MediaTypes.PERSON:
-                        items.push( new PersonVO( item ) );
-                        break;
-                    default:
-                        break;
-                }
-            }
-        } );
-        resolve( items );
-    };
-
     if ( query === "" ) {
         resolve( [] );
     } else {
-        theMovieDb.search.getMulti( { query: encodeURIComponent( query ) }, onSuccess, onError );
+        query = encodeURIComponent( query )
+        theMovieDb.search.getMulti( { query }, onSuccess.bind( null, resolve ), onError.bind( null, reject ) );
     }
 } );
-
-export default search;

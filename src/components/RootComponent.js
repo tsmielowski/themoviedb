@@ -1,9 +1,10 @@
 import React from "react";
 import HeaderComponent from "./HeaderComponent";
 import SearchComponent from "./SearchComponent";
-import TheMovieDB from "./TheMovieDBComponents";
+import TheMovieDBDetailComponent from "./TheMovieDBDetailComponent";
+import TheMovieDBListComponent from "./TheMovieDBListComponent";
 import "./css/RootComponent.css";
-import search from "./../proxy/TheMovieDBAPIProxy";
+import { search } from "./../proxy/TheMovieDBAPIProxy";
 /**
  * @public
  */
@@ -67,14 +68,14 @@ class RootComponent extends React.Component {
                 <HeaderComponent
                     header="The Movie DB"
                 />
-                <TheMovieDB.DetailComponent
+                <TheMovieDBDetailComponent
                     item={ item }
                 />
                 <SearchComponent
                     onSearchTextChange={ this.handleSearchTextChange }
                     searchText={ this.state.searchText }
                 />
-                <TheMovieDB.ListComponent
+                <TheMovieDBListComponent
                     items={ this.state.items }
                     onItemSelect={ this.handleItemSelect }
                 />

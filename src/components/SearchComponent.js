@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./css/SearchComponent.css";
 /**
  * @public
@@ -45,5 +46,10 @@ class SearchComponent extends React.Component {
         );
     }
 }
+
+SearchComponent.propTypes = {
+    onSearchTextChange: PropTypes.func,
+    searchText: PropTypes.string
+};
 
 export default SearchComponent;
